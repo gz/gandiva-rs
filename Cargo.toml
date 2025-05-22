@@ -12,11 +12,10 @@ version = "0.1.0"
 [workspace]
 resolver = "2"
 members = [
-    "gandiva-datafusion-plugin",
+    #"gandiva-datafusion-plugin",
     "gandiva-rs-bindings"
 ]
 
 [workspace.dependencies]
 gandiva-rs-bindings = { version = "0.1.0", path = "./gandiva-rs-bindings" }
-
-arrow = { version = "50.0.0" }
+arrow = { version = "55.1.0" }

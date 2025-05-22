@@ -99,7 +99,11 @@ impl ArrowTypeHelper {
             | DataType::Map(_, _)
             | DataType::RunEndEncoded(_, _)
             | DataType::Struct(_)
-            | DataType::Union(_, _) => {
+            | DataType::Union(_, _)
+            | DataType::BinaryView
+            | DataType::Utf8View
+            | DataType::ListView(_)
+            | DataType::LargeListView(_) => {
                 unimplemented!("{}", arrow_type)
             }
         } as i32;

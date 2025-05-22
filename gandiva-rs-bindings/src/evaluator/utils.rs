@@ -61,7 +61,7 @@ pub fn new_buffers(data_types: &[DataType], capacity: usize) -> Vec<MutableBuffe
                     MutableBuffer::from_len_zeroed(capacity * data_type.primitive_width().unwrap());
                 mutable_buffers.push(buffer);
             }
-            DataType::Utf8 | DataType::Binary => {
+            DataType::Utf8 | DataType::Binary | DataType::Utf8View | DataType::BinaryView => {
                 // safety: `unsafe` code assumes that this buffer is initialized with one element
                 let offsets =
                     MutableBuffer::from_len_zeroed((1 + capacity) * mem::size_of::<i32>());
@@ -77,12 +77,12 @@ pub fn new_buffers(data_types: &[DataType], capacity: usize) -> Vec<MutableBuffe
                 mutable_buffers.push(offsets);
                 mutable_buffers.push(values);
             }
-            DataType::List(_) | DataType::Map(_, _) => {
+            DataType::List(_) | DataType::Map(_, _) | DataType::ListView(_) => {
                 // offset buffer always starts with a zero
                 let buffer = MutableBuffer::from_len_zeroed((1 + capacity) * mem::size_of::<i32>());
                 mutable_buffers.push(buffer);
             }
-            DataType::LargeList(_) => {
+            DataType::LargeList(_) | DataType::LargeListView(_) => {
                 // offset buffer always starts with a zero
                 let buffer = MutableBuffer::from_len_zeroed((1 + capacity) * mem::size_of::<i64>());
                 mutable_buffers.push(buffer);
